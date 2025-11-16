@@ -6,8 +6,8 @@ from plover.gui_qt.tool import Tool
 from plover.formatting import OutputHelper
 from textstat.textstat import textstat
 
-from plover_wpm_meter.strokes_meter_ui import Ui_StrokesMeter
-from plover_wpm_meter.wpm_meter_ui import Ui_WpmMeter
+from plover_wpm_meter_5.strokes_meter_ui import Ui_StrokesMeter
+from plover_wpm_meter_5.wpm_meter_ui import Ui_WpmMeter
 
 
 class CaptureOutput(object):

@@ -1,6 +1,6 @@
 {
     "files": [
-        ["plover_wpm_meter/*.ui", "plover_wpm_meter"]
+        ["plover_wpm_meter_5/*.ui", "plover_wpm_meter_5"]
     ],
     "hooks": [],
     "pyrcc": "pyside6-rcc",
