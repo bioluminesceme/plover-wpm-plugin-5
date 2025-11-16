@@ -40,7 +40,7 @@ class Ui_WpmMeter(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.wpm1.sizePolicy().hasHeightForWidth())
         self.wpm1.setSizePolicy(sizePolicy)
-        self.wpm1.setSegmentStyle(QLCDNumber.Flat)
+        self.wpm1.setSegmentStyle(QLCDNumber.SegmentStyle.Flat)
         self.wpm1.setProperty(u"value", 0.000000000000000)
 
         self.wpm_meter.addWidget(self.wpm1, 0, 0, 1, 1)
@@ -53,7 +53,7 @@ class Ui_WpmMeter(object):
 
         self.wpm2 = QLCDNumber(self.layoutWidget)
         self.wpm2.setObjectName(u"wpm2")
-        self.wpm2.setSegmentStyle(QLCDNumber.Flat)
+        self.wpm2.setSegmentStyle(QLCDNumber.SegmentStyle.Flat)
         self.wpm2.setProperty(u"value", 0.000000000000000)
 
         self.wpm_meter.addWidget(self.wpm2, 1, 0, 1, 1)

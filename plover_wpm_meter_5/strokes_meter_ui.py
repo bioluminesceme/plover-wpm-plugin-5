@@ -40,7 +40,7 @@ class Ui_StrokesMeter(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.strokes1.sizePolicy().hasHeightForWidth())
         self.strokes1.setSizePolicy(sizePolicy)
-        self.strokes1.setSegmentStyle(QLCDNumber.Flat)
+        self.strokes1.setSegmentStyle(QLCDNumber.SegmentStyle.Flat)
         self.strokes1.setProperty(u"value", 0.000000000000000)
 
         self.strokes_meter.addWidget(self.strokes1, 0, 0, 1, 1)
@@ -53,7 +53,7 @@ class Ui_StrokesMeter(object):
 
         self.strokes2 = QLCDNumber(self.layoutWidget)
         self.strokes2.setObjectName(u"strokes2")
-        self.strokes2.setSegmentStyle(QLCDNumber.Flat)
+        self.strokes2.setSegmentStyle(QLCDNumber.SegmentStyle.Flat)
         self.strokes2.setProperty(u"value", 0.000000000000000)
 
         self.strokes_meter.addWidget(self.strokes2, 1, 0, 1, 1)
