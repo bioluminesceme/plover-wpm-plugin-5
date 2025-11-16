@@ -30,24 +30,53 @@ class CaptureOutput(object):
 
 class BaseMeter(Tool):
     def __init__(self, engine):
-        super().__init__(engine)
+        try:
+            print("[DEBUG] BaseMeter.__init__ starting")
+            print(f"[DEBUG] Engine type: {type(engine)}")
 
-        self.setWindowFlags(self.windowFlags() | Qt.WindowStaysOnTopHint)
-        self.setupUi(self)
+            print("[DEBUG] Calling super().__init__(engine)")
+            super().__init__(engine)
+            print("[DEBUG] super().__init__ completed successfully")
 
-        self.is_pinned_checkbox.stateChanged.connect(self.set_is_pinned)
+            print("[DEBUG] Setting window flags")
+            self.setWindowFlags(self.windowFlags() | Qt.WindowStaysOnTopHint)
+            print("[DEBUG] Window flags set successfully")
 
-        self._timer = QTimer()
-        self._timer.setInterval(1000)
-        self._timer.setTimerType(Qt.PreciseTimer)
-        self._timer.timeout.connect(self.on_timer)
-        self._timer.start()
+            print("[DEBUG] Calling setupUi(self)")
+            self.setupUi(self)
+            print("[DEBUG] setupUi completed successfully")
 
-        self.restore_state()
-        self.finished.connect(self.save_state)
+            print("[DEBUG] Connecting is_pinned_checkbox")
+            self.is_pinned_checkbox.stateChanged.connect(self.set_is_pinned)
+            print("[DEBUG] is_pinned_checkbox connected")
 
-        self.chars = []
-        engine.signal_connect("translated", self.on_translation)
+            print("[DEBUG] Creating QTimer")
+            self._timer = QTimer()
+            self._timer.setInterval(1000)
+            self._timer.setTimerType(Qt.PreciseTimer)
+            self._timer.timeout.connect(self.on_timer)
+            self._timer.start()
+            print("[DEBUG] QTimer started")
+
+            print("[DEBUG] Calling restore_state()")
+            self.restore_state()
+            print("[DEBUG] restore_state completed")
+
+            print("[DEBUG] Connecting finished signal")
+            self.finished.connect(self.save_state)
+            print("[DEBUG] finished signal connected")
+
+            print("[DEBUG] Initializing chars list")
+            self.chars = []
+            print("[DEBUG] Connecting translated signal")
+            engine.signal_connect("translated", self.on_translation)
+            print("[DEBUG] BaseMeter.__init__ completed successfully!")
+
+        except Exception as e:
+            print(f"[ERROR] Exception in BaseMeter.__init__: {e}")
+            import traceback
+            traceback.print_exc()
+            raise
 
     def on_translation(self, old, new):
         output = CaptureOutput(self.chars)
@@ -85,11 +114,14 @@ class PloverWpmMeter(BaseMeter, Ui_WpmMeter):
     }
 
     def __init__(self, engine):
+        print("[DEBUG] PloverWpmMeter.__init__ starting")
         super().__init__(engine)
+        print("[DEBUG] PloverWpmMeter: super().__init__ completed")
         self.strokes = []
         self.wpm_method.addItem("NCRA (by syllables)", "ncra")
         self.wpm_method.addItem("Traditional (by characters)", "traditional")
         self.wpm_method.addItem("Spaces (by whitespace)", "spaces")
+        print("[DEBUG] PloverWpmMeter.__init__ completed")
 
     def on_timer(self):
         max_timeout = max(self._TIMEOUTS.values())
@@ -112,7 +144,9 @@ class PloverStrokesMeter(BaseMeter, Ui_StrokesMeter):
     }
 
     def __init__(self, engine):
+        print("[DEBUG] PloverStrokesMeter.__init__ starting")
         super().__init__(engine)
+        print("[DEBUG] PloverStrokesMeter: super().__init__ completed")
         self.strokes_method.addItem("NCRA (by syllables)", "ncra")
         self.strokes_method.addItem("Traditional (by characters)",
                                     "traditional")
@@ -122,7 +156,9 @@ class PloverStrokesMeter(BaseMeter, Ui_StrokesMeter):
         # By default, the QLCDNumbers will just display "0", without a decimal
         # point, on initial render. Render them ourselves so that we don't
         # switch from "0" to "0.00" after a second.
+        print("[DEBUG] PloverStrokesMeter: calling on_timer()")
         self.on_timer()
+        print("[DEBUG] PloverStrokesMeter.__init__ completed")
 
     def on_translation(self, old, new):
         super().on_translation(old, new)
