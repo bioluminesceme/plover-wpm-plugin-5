@@ -1,5 +1,4 @@
 import time
-import logging
 
 from PySide6.QtCore import Qt, QTimer
 
@@ -9,8 +8,6 @@ from textstat.textstat import textstat
 
 from plover_wpm_meter_5.strokes_meter_ui import Ui_StrokesMeter
 from plover_wpm_meter_5.wpm_meter_ui import Ui_WpmMeter
-
-log = logging.getLogger(__name__)
 
 
 class CaptureOutput(object):
@@ -34,49 +31,51 @@ class CaptureOutput(object):
 class BaseMeter(Tool):
     def __init__(self, engine):
         try:
-            log.info("BaseMeter.__init__ starting")
-            log.info(f"Engine type: {type(engine)}")
+            print("[DEBUG] BaseMeter.__init__ starting")
+            print(f"[DEBUG] Engine type: {type(engine)}")
 
-            log.info("Calling super().__init__(engine)")
+            print("[DEBUG] Calling super().__init__(engine)")
             super().__init__(engine)
-            log.info("super().__init__ completed successfully")
+            print("[DEBUG] super().__init__ completed successfully")
 
-            log.info("Setting window flags")
+            print("[DEBUG] Setting window flags")
             self.setWindowFlags(self.windowFlags() | Qt.WindowStaysOnTopHint)
-            log.info("Window flags set successfully")
+            print("[DEBUG] Window flags set successfully")
 
-            log.info("Calling setupUi(self)")
+            print("[DEBUG] Calling setupUi(self)")
             self.setupUi(self)
-            log.info("setupUi completed successfully")
+            print("[DEBUG] setupUi completed successfully")
 
-            log.info("Connecting is_pinned_checkbox")
+            print("[DEBUG] Connecting is_pinned_checkbox")
             self.is_pinned_checkbox.stateChanged.connect(self.set_is_pinned)
-            log.info("is_pinned_checkbox connected")
+            print("[DEBUG] is_pinned_checkbox connected")
 
-            log.info("Creating QTimer")
+            print("[DEBUG] Creating QTimer")
             self._timer = QTimer()
             self._timer.setInterval(1000)
             self._timer.setTimerType(Qt.PreciseTimer)
             self._timer.timeout.connect(self.on_timer)
             self._timer.start()
-            log.info("QTimer started")
+            print("[DEBUG] QTimer started")
 
-            log.info("Calling restore_state()")
+            print("[DEBUG] Calling restore_state()")
             self.restore_state()
-            log.info("restore_state completed")
+            print("[DEBUG] restore_state completed")
 
-            log.info("Connecting finished signal")
+            print("[DEBUG] Connecting finished signal")
             self.finished.connect(self.save_state)
-            log.info("finished signal connected")
+            print("[DEBUG] finished signal connected")
 
-            log.info("Initializing chars list")
+            print("[DEBUG] Initializing chars list")
             self.chars = []
-            log.info("Connecting translated signal")
+            print("[DEBUG] Connecting translated signal")
             engine.signal_connect("translated", self.on_translation)
-            log.info("BaseMeter.__init__ completed successfully!")
+            print("[DEBUG] BaseMeter.__init__ completed successfully!")
 
         except Exception as e:
-            log.error(f"Exception in BaseMeter.__init__: {e}", exc_info=True)
+            print(f"[ERROR] Exception in BaseMeter.__init__: {e}")
+            import traceback
+            traceback.print_exc()
             raise
 
     def on_translation(self, old, new):
@@ -115,14 +114,14 @@ class PloverWpmMeter(BaseMeter, Ui_WpmMeter):
     }
 
     def __init__(self, engine):
-        log.info("PloverWpmMeter.__init__ starting")
+        print("[DEBUG] PloverWpmMeter.__init__ starting")
         super().__init__(engine)
-        log.info("PloverWpmMeter: super().__init__ completed")
+        print("[DEBUG] PloverWpmMeter: super().__init__ completed")
         self.strokes = []
         self.wpm_method.addItem("NCRA (by syllables)", "ncra")
         self.wpm_method.addItem("Traditional (by characters)", "traditional")
         self.wpm_method.addItem("Spaces (by whitespace)", "spaces")
-        log.info("PloverWpmMeter.__init__ completed")
+        print("[DEBUG] PloverWpmMeter.__init__ completed")
 
     def on_timer(self):
         max_timeout = max(self._TIMEOUTS.values())
@@ -145,9 +144,9 @@ class PloverStrokesMeter(BaseMeter, Ui_StrokesMeter):
     }
 
     def __init__(self, engine):
-        log.info("PloverStrokesMeter.__init__ starting")
+        print("[DEBUG] PloverStrokesMeter.__init__ starting")
         super().__init__(engine)
-        log.info("PloverStrokesMeter: super().__init__ completed")
+        print("[DEBUG] PloverStrokesMeter: super().__init__ completed")
         self.strokes_method.addItem("NCRA (by syllables)", "ncra")
         self.strokes_method.addItem("Traditional (by characters)",
                                     "traditional")
@@ -157,9 +156,9 @@ class PloverStrokesMeter(BaseMeter, Ui_StrokesMeter):
         # By default, the QLCDNumbers will just display "0", without a decimal
         # point, on initial render. Render them ourselves so that we don't
         # switch from "0" to "0.00" after a second.
-        log.info("PloverStrokesMeter: calling on_timer()")
+        print("[DEBUG] PloverStrokesMeter: calling on_timer()")
         self.on_timer()
-        log.info("PloverStrokesMeter.__init__ completed")
+        print("[DEBUG] PloverStrokesMeter.__init__ completed")
 
     def on_translation(self, old, new):
         super().on_translation(old, new)
