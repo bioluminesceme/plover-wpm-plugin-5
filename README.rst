@@ -1,6 +1,24 @@
 Plover WPM Meter
 ================
 
+**Plover 5.0 Compatible Fork**
+-------------------------------
+
+This is a fork of the `original plover_wpm_meter`_ updated for **Plover 5.0** compatibility.
+The migration from PyQt5 to PySide6 was performed by Claude AI (Anthropic's AI assistant).
+
+- **Original plugin**: https://github.com/arxanas/plover_wpm_meter
+- **This fork (Plover 5.0+)**: https://github.com/bioluminesceme/plover-wpm-plugin-5
+- **Version**: 0.3.0+
+
+For Plover 4.x, please use the `original plugin version 0.2.3`_.
+
+.. _original plover_wpm_meter: https://github.com/arxanas/plover_wpm_meter
+.. _original plugin version 0.2.3: https://github.com/arxanas/plover_wpm_meter/releases/tag/v0.2.3
+
+About
+-----
+
 This is a plugin for Plover to display your typing speed as you type, in
 either or both of words per minute or strokes per minute:
 
