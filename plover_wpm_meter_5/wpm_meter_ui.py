@@ -22,28 +22,39 @@ from plover_wpm_meter_5 import resources_rc
 
 class Ui_WpmMeter(object):
     def setupUi(self, WpmMeter):
+        print("[DEBUG] Ui_WpmMeter.setupUi: Starting")
         if not WpmMeter.objectName():
             WpmMeter.setObjectName(u"WpmMeter")
+        print("[DEBUG] Ui_WpmMeter.setupUi: Set object name")
         WpmMeter.resize(180, 151)
+        print("[DEBUG] Ui_WpmMeter.setupUi: Resized window")
         self.layoutWidget = QWidget(WpmMeter)
+        print("[DEBUG] Ui_WpmMeter.setupUi: Created layoutWidget")
         self.layoutWidget.setObjectName(u"layoutWidget")
         self.layoutWidget.setGeometry(QRect(0, 30, 181, 121))
+        print("[DEBUG] Ui_WpmMeter.setupUi: Creating QGridLayout")
         self.wpm_meter = QGridLayout(self.layoutWidget)
         self.wpm_meter.setSpacing(0)
         self.wpm_meter.setContentsMargins(0, 0, 0, 0)
         self.wpm_meter.setObjectName(u"wpm_meter")
         self.wpm_meter.setContentsMargins(0, 0, 0, 0)
+        print("[DEBUG] Ui_WpmMeter.setupUi: Creating QLCDNumber wpm1")
         self.wpm1 = QLCDNumber(self.layoutWidget)
+        print("[DEBUG] Ui_WpmMeter.setupUi: Created QLCDNumber wpm1")
         self.wpm1.setObjectName(u"wpm1")
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.wpm1.sizePolicy().hasHeightForWidth())
         self.wpm1.setSizePolicy(sizePolicy)
+        print("[DEBUG] Ui_WpmMeter.setupUi: Setting wpm1 segment style")
         self.wpm1.setSegmentStyle(QLCDNumber.Flat)
+        print("[DEBUG] Ui_WpmMeter.setupUi: Setting wpm1 value property")
         self.wpm1.setProperty(u"value", 0.000000000000000)
+        print("[DEBUG] Ui_WpmMeter.setupUi: Adding wpm1 to grid")
 
         self.wpm_meter.addWidget(self.wpm1, 0, 0, 1, 1)
+        print("[DEBUG] Ui_WpmMeter.setupUi: wpm1 added to grid")
 
         self.wpm1_label = QLabel(self.layoutWidget)
         self.wpm1_label.setObjectName(u"wpm1_label")
@@ -95,9 +106,13 @@ class Ui_WpmMeter(object):
         self.wpm_controls.addWidget(self.is_pinned_checkbox)
 
 
+        print("[DEBUG] Ui_WpmMeter.setupUi: Calling retranslateUi")
         self.retranslateUi(WpmMeter)
+        print("[DEBUG] Ui_WpmMeter.setupUi: retranslateUi completed")
 
+        print("[DEBUG] Ui_WpmMeter.setupUi: Calling connectSlotsByName")
         QMetaObject.connectSlotsByName(WpmMeter)
+        print("[DEBUG] Ui_WpmMeter.setupUi: COMPLETED SUCCESSFULLY")
     # setupUi
 
     def retranslateUi(self, WpmMeter):

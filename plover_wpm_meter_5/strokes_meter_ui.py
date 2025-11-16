@@ -22,10 +22,14 @@ from plover_wpm_meter_5 import resources_rc
 
 class Ui_StrokesMeter(object):
     def setupUi(self, StrokesMeter):
+        print("[DEBUG] Ui_StrokesMeter.setupUi: Starting")
         if not StrokesMeter.objectName():
             StrokesMeter.setObjectName(u"StrokesMeter")
+        print("[DEBUG] Ui_StrokesMeter.setupUi: Set object name")
         StrokesMeter.resize(180, 151)
+        print("[DEBUG] Ui_StrokesMeter.setupUi: Resized window")
         self.layoutWidget = QWidget(StrokesMeter)
+        print("[DEBUG] Ui_StrokesMeter.setupUi: Created layoutWidget")
         self.layoutWidget.setObjectName(u"layoutWidget")
         self.layoutWidget.setGeometry(QRect(0, 30, 181, 121))
         self.strokes_meter = QGridLayout(self.layoutWidget)
@@ -94,9 +98,13 @@ class Ui_StrokesMeter(object):
         self.horizontalLayout.addWidget(self.is_pinned_checkbox)
 
 
+        print("[DEBUG] Ui_StrokesMeter.setupUi: Calling retranslateUi")
         self.retranslateUi(StrokesMeter)
+        print("[DEBUG] Ui_StrokesMeter.setupUi: retranslateUi completed")
 
+        print("[DEBUG] Ui_StrokesMeter.setupUi: Calling connectSlotsByName")
         QMetaObject.connectSlotsByName(StrokesMeter)
+        print("[DEBUG] Ui_StrokesMeter.setupUi: COMPLETED SUCCESSFULLY")
     # setupUi
 
     def retranslateUi(self, StrokesMeter):
