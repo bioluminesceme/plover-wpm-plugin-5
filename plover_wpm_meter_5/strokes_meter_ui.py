@@ -18,7 +18,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDialog,
     QGridLayout, QHBoxLayout, QLCDNumber, QLabel,
     QSizePolicy, QSpacerItem, QWidget)
-import resources_rc
+from plover_wpm_meter_5 import resources_rc
 
 class Ui_StrokesMeter(object):
     def setupUi(self, StrokesMeter):
