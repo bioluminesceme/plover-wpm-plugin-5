@@ -1,6 +1,6 @@
 import time
 
-from PyQt5.QtCore import Qt, QTimer
+from PySide6.QtCore import Qt, QTimer
 
 from plover.gui_qt.tool import Tool
 from plover.formatting import OutputHelper
