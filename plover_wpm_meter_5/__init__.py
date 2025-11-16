@@ -32,7 +32,7 @@ class BaseMeter(Tool):
     def __init__(self, engine):
         super().__init__(engine)
 
-        self.setWindowFlags(self.windowFlags() | Qt.WindowType.WindowStaysOnTopHint)
+        self.setWindowFlags(self.windowFlags() | Qt.WindowStaysOnTopHint)
         self.setupUi(self)
 
         self.is_pinned_checkbox.stateChanged.connect(self.set_is_pinned)
@@ -67,9 +67,9 @@ class BaseMeter(Tool):
     def set_is_pinned(self):
         is_pinned = self.is_pinned_checkbox.isChecked()
         if is_pinned:
-            self.setWindowFlags(self.windowFlags() | Qt.WindowType.WindowStaysOnTopHint)
+            self.setWindowFlags(self.windowFlags() | Qt.WindowStaysOnTopHint)
         else:
-            self.setWindowFlags(self.windowFlags() & ~Qt.WindowType.WindowStaysOnTopHint)
+            self.setWindowFlags(self.windowFlags() & ~Qt.WindowStaysOnTopHint)
         self.show()
 
 
@@ -77,7 +77,7 @@ class PloverWpmMeter(BaseMeter, Ui_WpmMeter):
 
     TITLE = "WPM Meter"
     ROLE = "wpm_meter"
-    # ICON = ':/wpm_meter/icon.svg'  # Commented out - SVG icon causes crash in PySide6
+    ICON = ':/wpm_meter/icon.svg'
 
     _TIMEOUTS = {
         "wpm1": 10,
@@ -104,7 +104,7 @@ class PloverStrokesMeter(BaseMeter, Ui_StrokesMeter):
 
     TITLE = "Strokes Meter"
     ROLE = "strokes_meter"
-    # ICON = ':/wpm_meter/icon.svg'  # Commented out - SVG icon causes crash in PySide6
+    ICON = ':/wpm_meter/icon.svg'
 
     _TIMEOUTS = {
         "strokes1": 10,
