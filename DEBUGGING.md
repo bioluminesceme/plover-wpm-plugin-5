@@ -1,16 +1,26 @@
 # Debugging Plover 5 Migration Issues
 
-## Current Status
+## ✅ RESOLVED - Emoji Crash
+
+**Root Cause**: Emoji characters (`\ud83d\udccc` = 📌) in PySide6 widget text caused immediate C++ segfault on Windows.
+
+**Solution**: Replaced emoji with plain text "Pin" in checkbox labels.
+
+**Status**: Both WPM Meter and Strokes Meter now open and function correctly!
+
+---
+
+## Original Issue (SOLVED)
 
 The plugin successfully:
 - ✅ Installs via pip from GitHub
 - ✅ Registers both tools (WPM Meter and Strokes Meter) in Plover's Tools menu
 - ✅ Shows icons in the Tools menu
 
-The plugin FAILS when:
+The plugin WAS FAILING when:
 - ❌ User clicks on either WPM Meter or Strokes Meter in Tools menu
 - ❌ Plover crashes/exits immediately (no error logged to plover.log)
-- ❌ Windows popup shows "No module named 'sqlite3'" error (but this is from plover_ninja, not our plugin)
+- ❌ No Python traceback - C++ level crash
 
 ## Environment
 
@@ -91,61 +101,34 @@ Both tools register successfully during Plover startup.
    - Plover 5.1.0 might be using a different PySide6 version than our built UI files
    - UI files were built with PySide6 6.10.0
 
-## What to Try Next
+## How The Bug Was Found
 
-### Option 1: Test Without Resources
-Remove the resources import and see if the window opens:
-```python
-# In wpm_meter_ui.py and strokes_meter_ui.py
-# Comment out: from plover_wpm_meter_5 import resources_rc
-```
+### Debugging Process (1 hour of pain!)
 
-### Option 2: Simplify the UI
-Create a minimal test version with just labels, no QLCDNumber widgets.
+1. **Tested resources removal** - Crash persisted ❌
+2. **Added extensive debug logging** - Used `print()` statements throughout initialization
+3. **Discovered plover_console.exe** - Running `plover_console.exe --log-level debug` shows debug output!
+4. **Narrowed down to setupUi** - Crash happened after "Calling setupUi(self)" but before "setupUi completed"
+5. **Added granular logging in setupUi** - Tracked each widget creation step-by-step
+6. **Found retranslateUi** - Crash happened after "Calling retranslateUi" but before completion
+7. **Line-by-line in retranslateUi** - Crash occurred exactly at `self.is_pinned_checkbox.setText(emoji)`
+8. **Removed emoji** - SOLVED! ✅
 
-### Option 3: Check Plover's PySide6 Version
-```bash
-./venv/Scripts/python -c "import PySide6; print(PySide6.__version__)"
-```
+### Key Debugging Tools
 
-Compare with Plover's bundled PySide6 version.
+**Essential**: `plover_console.exe --log-level debug`
+- Shows `print()` output in real-time
+- Located at: `"C:\Program Files\Open Steno Project\Plover\plover_console.exe"`
+- Usage: `.\plover_console.exe --log-level debug`
 
-### Option 4: Add Exception Handling
-Wrap the `__init__` in try/except to catch any Python exceptions before the C++ crash:
-```python
-def __init__(self, engine):
-    try:
-        super().__init__(engine)
-        print("BaseMeter: super().__init__ succeeded")
+**Fast iteration**: Edit files directly in plugin directory
+- Path: `C:\Users\Corien\AppData\Local\plover\plover\plugins\win\Python313\site-packages\plover_wpm_meter_5`
+- No need to reinstall plugin for each test
+- Just restart Plover to test changes
 
-        self.setWindowFlags(self.windowFlags() | Qt.WindowStaysOnTopHint)
-        print("BaseMeter: setWindowFlags succeeded")
+### The Lesson
 
-        self.setupUi(self)
-        print("BaseMeter: setupUi succeeded")
-
-        # ... rest of init
-    except Exception as e:
-        print(f"ERROR in BaseMeter.__init__: {e}")
-        import traceback
-        traceback.print_exc()
-        raise
-```
-
-### Option 5: Look at Working Plover 5 Plugins
-Check how other Plover 5 plugins handle Qt Tool windows. Look in:
-```
-C:\Users\Corien\AppData\Local\plover\plover\plugins\win\Python313\site-packages
-```
-
-Find a working gui.qt.tool plugin and compare the code structure.
-
-### Option 6: Test with Plover's Python
-Try importing our module directly in Plover's Python interpreter:
-```bash
-"C:\Program Files\Open Steno Project\Plover\plover.exe" --script
->>> from plover_wpm_meter_5 import PloverWpmMeter
-```
+**NEVER USE EMOJI IN PYSIDE6 WIDGETS ON WINDOWS** - they cause C++ segfaults with zero Python traceback!
 
 ## Files Modified
 
