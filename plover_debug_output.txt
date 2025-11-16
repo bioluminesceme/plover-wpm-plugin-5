@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Program Files\Open Steno Project\Plover\plover_console.exe\__main__.py", line 7, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "build/windist/data\Lib\site-packages\plover\scripts\dist_main.py", line 17, in main
+  File "build/windist/data\Lib\subprocess.py", line 1039, in __init__
+  File "build/windist/data\Lib\subprocess.py", line 1551, in _execute_child
+FileNotFoundError: [WinError 2] The system cannot find the file specified
