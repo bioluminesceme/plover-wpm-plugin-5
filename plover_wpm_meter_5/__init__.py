@@ -77,7 +77,7 @@ class PloverWpmMeter(BaseMeter, Ui_WpmMeter):
 
     TITLE = "WPM Meter"
     ROLE = "wpm_meter"
-    ICON = ':/wpm_meter/icon.svg'
+    # ICON = ':/wpm_meter/icon.svg'  # Commented out - SVG icon causes crash in PySide6
 
     _TIMEOUTS = {
         "wpm1": 10,
@@ -104,7 +104,7 @@ class PloverStrokesMeter(BaseMeter, Ui_StrokesMeter):
 
     TITLE = "Strokes Meter"
     ROLE = "strokes_meter"
-    ICON = ':/wpm_meter/icon.svg'
+    # ICON = ':/wpm_meter/icon.svg'  # Commented out - SVG icon causes crash in PySide6
 
     _TIMEOUTS = {
         "strokes1": 10,
