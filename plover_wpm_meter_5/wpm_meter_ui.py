@@ -119,6 +119,8 @@ class Ui_WpmMeter(object):
         WpmMeter.setWindowTitle(QCoreApplication.translate("WpmMeter", u"WPM Meter", None))
         self.wpm1_label.setText(QCoreApplication.translate("WpmMeter", u"last 10s", None))
         self.wpm2_label.setText(QCoreApplication.translate("WpmMeter", u"last 1m", None))
-        self.is_pinned_checkbox.setText(QCoreApplication.translate("WpmMeter", u"\ud83d\udccc", None))
+        # IMPORTANT: DO NOT USE EMOJI - causes crash in PySide6 on Windows
+        # Original: self.is_pinned_checkbox.setText(QCoreApplication.translate("WpmMeter", u"\ud83d\udccc", None))
+        self.is_pinned_checkbox.setText("Pin")
     # retranslateUi
 

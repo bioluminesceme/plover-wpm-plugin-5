@@ -140,6 +140,8 @@ class Ui_StrokesMeter(object):
         StrokesMeter.setWindowTitle(QCoreApplication.translate("StrokesMeter", u"Strokes Meter", None))
         self.strokes1_label.setText(QCoreApplication.translate("StrokesMeter", u"last 10s", None))
         self.strokes2_label.setText(QCoreApplication.translate("StrokesMeter", u"last 1m", None))
-        self.is_pinned_checkbox.setText(QCoreApplication.translate("StrokesMeter", u"\ud83d\udccc", None))
+        # IMPORTANT: DO NOT USE EMOJI - causes crash in PySide6 on Windows
+        # Original: self.is_pinned_checkbox.setText(QCoreApplication.translate("StrokesMeter", u"\ud83d\udccc", None))
+        self.is_pinned_checkbox.setText("Pin")
     # retranslateUi
 

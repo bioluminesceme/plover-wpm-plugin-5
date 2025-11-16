@@ -75,3 +75,18 @@ The plugin registers two Qt tools via entry points in `setup.cfg`:
 
 ## Testing Notes
 Tests use `mock.patch("time.time")` to control timestamps for deterministic results. The core calculation functions (`_wpm_of_chars`, `_filter_old_items`, etc.) are tested independently from the Qt UI.
+
+## CRITICAL: PySide6 on Windows Issues
+
+### ⚠️ DO NOT USE EMOJI IN UI TEXT
+**NEVER use emoji characters in PySide6 widgets on Windows** - they cause immediate crashes (segfault at C++ level).
+
+**Problem**: The original PyQt5 version used 📌 emoji (`\ud83d\udccc`) for the pin checkbox text. When migrated to PySide6, this caused Plover to crash immediately when opening the tool windows.
+
+**Solution**: Replace all emoji with plain text. For example:
+- ❌ `self.is_pinned_checkbox.setText("📌")`
+- ✅ `self.is_pinned_checkbox.setText("Pin")`
+
+**Root Cause**: The crash occurred in `retranslateUi()` when calling `setText()` with emoji on QCheckBox widgets. This appears to be a PySide6/Qt encoding or font rendering issue specific to Windows.
+
+**Debugging Notes**: The crash produced no Python traceback - only a C++ segfault. Debug output via `print()` statements (visible in `plover_console.exe --log-level debug`) was essential to pinpointing the exact line.
