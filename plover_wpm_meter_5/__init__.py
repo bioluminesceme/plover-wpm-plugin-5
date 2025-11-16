@@ -32,7 +32,7 @@ class BaseMeter(Tool):
     def __init__(self, engine):
         super().__init__(engine)
 
-        self.setWindowFlags(self.windowFlags() | Qt.WindowStaysOnTopHint)
+        self.setWindowFlags(self.windowFlags() | Qt.WindowType.WindowStaysOnTopHint)
         self.setupUi(self)
 
         self.is_pinned_checkbox.stateChanged.connect(self.set_is_pinned)
@@ -67,9 +67,9 @@ class BaseMeter(Tool):
     def set_is_pinned(self):
         is_pinned = self.is_pinned_checkbox.isChecked()
         if is_pinned:
-            self.setWindowFlags(self.windowFlags() | Qt.WindowStaysOnTopHint)
+            self.setWindowFlags(self.windowFlags() | Qt.WindowType.WindowStaysOnTopHint)
         else:
-            self.setWindowFlags(self.windowFlags() & ~Qt.WindowStaysOnTopHint)
+            self.setWindowFlags(self.windowFlags() & ~Qt.WindowType.WindowStaysOnTopHint)
         self.show()
 
 
