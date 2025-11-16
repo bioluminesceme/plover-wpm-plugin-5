@@ -94,4 +94,6 @@ ENV/
 # Rope project settings
 .ropeproject
 
-# End of https://www.gitignore.io/api/python
+# End of https://www.gitignore.io/api/pythonvenv/
+*.pyc
+__pycache__/

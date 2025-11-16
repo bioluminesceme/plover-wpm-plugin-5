@@ -1,6 +1,5 @@
 [build-system]
 requires = [
-	"plover_build_utils>=0.6.0",
 	"setuptools>=38.2.4",
 	"wheel",
 ]
